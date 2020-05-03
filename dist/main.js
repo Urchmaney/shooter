@@ -86,14 +86,39 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./img/space-shooter.png":
+/*!*******************************!*\
+  !*** ./img/space-shooter.png ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = (__webpack_require__.p + \"73d7c9194abf0fdfea07cca4d69d665d.png\");\n\n//# sourceURL=webpack:///./img/space-shooter.png?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("window.addEventListener('load', (e) => {\n    const mainContent = document.getElementById('main');\n    mainContent.append('Welcome to webpack');\n})\n\n//# sourceURL=webpack:///./src/index.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _shooter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./shooter */ \"./src/shooter.js\");\n\n\nconst shooter = new _shooter__WEBPACK_IMPORTED_MODULE_0__[\"default\"](window.innerWidth);\nconst main = document.getElementById('main');\n\nwindow.addEventListener('load', (e) => {\n  shooter.display();\n  const mainContent = document.getElementById('main');\n  mainContent.append('Welcome to webpack');\n});\n\nwindow.addEventListener('keydown', (e) => {\n  if (e.keyCode === 39) shooter.moveRight();\n  if (e.keyCode === 37) shooter.moveLeft();\n  main.innerHTML = '';\n  shooter.display();\n});\n\n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/shooter.js":
+/*!************************!*\
+  !*** ./src/shooter.js ***!
+  \************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return Shooter; });\n/* harmony import */ var _img_space_shooter_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../img/space-shooter.png */ \"./img/space-shooter.png\");\n\n\nclass Shooter {\n  constructor(size) {\n    this.size = size;\n    this.position = this.size / 2;\n    this.width = 100;\n    this.height = 100;\n  }\n\n  moveRight() {\n    this.position += this.position >= this.size - (this.width / 2) ? 0 : 5;\n  }\n\n  moveLeft() {\n    this.position -= this.position <= (this.width / 2) ? 0 : 5;\n  }\n\n  getPosition() {\n    return this.position;\n  }\n\n  display() {\n    const img = document.createElement('img');\n    img.src = _img_space_shooter_png__WEBPACK_IMPORTED_MODULE_0__[\"default\"];\n    img.style.position = 'absolute';\n    img.style.bottom = 0;\n    img.style.left = `${this.position - (this.width / 2)}px`;\n    img.height = this.height;\n    img.width = this.width;\n    const main = document.getElementById('main');\n    main.appendChild(img);\n  }\n}\n\n//# sourceURL=webpack:///./src/shooter.js?");
 
 /***/ })
 
