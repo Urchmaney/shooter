@@ -21,7 +21,7 @@ export default class Shooter {
     return this.position;
   }
 
-  display() {
+  get() {
     const img = document.createElement('img');
     img.src = shooter;
     img.style.position = 'absolute';
@@ -29,7 +29,6 @@ export default class Shooter {
     img.style.left = `${this.position - (this.width / 2)}px`;
     img.height = this.height;
     img.width = this.width;
-    const main = document.getElementById('main');
-    main.appendChild(img);
+    return img;
   }
 }
