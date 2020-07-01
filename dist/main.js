@@ -98,6 +98,18 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ 
 
 /***/ }),
 
+/***/ "./src/bullet.js":
+/*!***********************!*\
+  !*** ./src/bullet.js ***!
+  \***********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return Bullet; });\nclass Bullet {\n  constructor(x = 0, y = 0, interval = 5, width = 5, height = 10) {\n    this.interval = interval;\n    this.x = x;\n    this.y = y;\n    this.width = width;\n    this.height = height;\n  }\n\n  move() {\n    this.y += this.interval;\n  }\n\n  getPosition() {\n    return { x: this.x, y: this.y };\n  }\n\n  get() {\n    const bullet = document.createElement('div');\n    bullet.style.width = `${this.width}px`;\n    bullet.style.height = `${this.height}px`;\n    bullet.style.position = 'absolute';\n    bullet.style.bottom = `${this.y}px`;\n    bullet.style.left = `${this.x}px`;\n    bullet.style.backgroundColor = 'red';\n    return bullet;\n  }\n}\n\n\n//# sourceURL=webpack:///./src/bullet.js?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
@@ -106,7 +118,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ 
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _shooter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./shooter */ \"./src/shooter.js\");\n\n\nconst shooter = new _shooter__WEBPACK_IMPORTED_MODULE_0__[\"default\"](window.innerWidth);\nconst main = document.getElementById('main');\n\nwindow.addEventListener('load', (e) => {\n  shooter.display();\n  const mainContent = document.getElementById('main');\n  mainContent.append('Welcome to webpack');\n});\n\nwindow.addEventListener('keydown', (e) => {\n  if (e.keyCode === 39) shooter.moveRight();\n  if (e.keyCode === 37) shooter.moveLeft();\n  main.innerHTML = '';\n  shooter.display();\n});\n\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _shooter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./shooter */ \"./src/shooter.js\");\n/* harmony import */ var _bullet__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./bullet */ \"./src/bullet.js\");\n\n\n\nconst bullets = [];\nconst shooter = new _shooter__WEBPACK_IMPORTED_MODULE_0__[\"default\"](window.innerWidth);\nconst main = document.getElementById('main');\n\nconst displayBoard = () => {\n  main.innerHTML = '';\n  main.appendChild(shooter.get());\n  bullets.forEach(bullet => main.appendChild(bullet.get()));\n};\n\nconst moveBullets = () => {\n  const windowHeight = window.innerHeight;\n  bullets.forEach(bullet => {\n    bullet.move();\n    // possible bug\n    if (bullet.getPosition().y > windowHeight) bullets.shift();\n  });\n  displayBoard();\n};\n\nwindow.addEventListener('load', () => {\n  displayBoard();\n});\n\nwindow.addEventListener('keydown', (e) => {\n  if (e.keyCode === 39) shooter.moveRight();\n  if (e.keyCode === 37) shooter.moveLeft();\n  if (e.keyCode === 32) bullets.push(new _bullet__WEBPACK_IMPORTED_MODULE_1__[\"default\"](shooter.getPosition(), 110, 20));\n});\n\nconst interval = setInterval(moveBullets, 100);\n\nsetTimeout(() => {\n  clearInterval(interval);\n}, 20000);\n\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
@@ -118,7 +130,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _sho
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return Shooter; });\n/* harmony import */ var _img_space_shooter_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../img/space-shooter.png */ \"./img/space-shooter.png\");\n\n\nclass Shooter {\n  constructor(size) {\n    this.size = size;\n    this.position = this.size / 2;\n    this.width = 100;\n    this.height = 100;\n  }\n\n  moveRight() {\n    this.position += this.position >= this.size - (this.width / 2) ? 0 : 5;\n  }\n\n  moveLeft() {\n    this.position -= this.position <= (this.width / 2) ? 0 : 5;\n  }\n\n  getPosition() {\n    return this.position;\n  }\n\n  display() {\n    const img = document.createElement('img');\n    img.src = _img_space_shooter_png__WEBPACK_IMPORTED_MODULE_0__[\"default\"];\n    img.style.position = 'absolute';\n    img.style.bottom = 0;\n    img.style.left = `${this.position - (this.width / 2)}px`;\n    img.height = this.height;\n    img.width = this.width;\n    const main = document.getElementById('main');\n    main.appendChild(img);\n  }\n}\n\n//# sourceURL=webpack:///./src/shooter.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return Shooter; });\n/* harmony import */ var _img_space_shooter_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../img/space-shooter.png */ \"./img/space-shooter.png\");\n\n\nclass Shooter {\n  constructor(boardSize, moveBy = 5, width = 100, height = 100) {\n    this.size = boardSize;\n    this.moveBy = moveBy;\n    this.position = this.size / 2;\n    this.width = width;\n    this.height = height;\n  }\n\n  moveRight() {\n    this.position += this.position >= this.size - (this.width / 2) ? 0 : this.moveBy;\n  }\n\n  moveLeft() {\n    this.position -= this.position <= (this.width / 2) ? 0 : this.moveBy;\n  }\n\n  getPosition() {\n    return this.position;\n  }\n\n  get() {\n    const img = document.createElement('img');\n    img.src = _img_space_shooter_png__WEBPACK_IMPORTED_MODULE_0__[\"default\"];\n    img.style.position = 'absolute';\n    img.style.bottom = 0;\n    img.style.left = `${this.position - (this.width / 2)}px`;\n    img.height = this.height;\n    img.width = this.width;\n    return img;\n  }\n}\n\n//# sourceURL=webpack:///./src/shooter.js?");
 
 /***/ })
 
