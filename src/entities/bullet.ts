@@ -14,9 +14,9 @@ export class Bullet implements Entity {
         this.context = context;
         this.x = x;
         this.y = y;
-        // setInterval(() => {
-        //     this.move()
-        // }, 10)
+        setInterval(() => {
+            this.move()
+        }, 10);
     }
    
     render(): void {
@@ -35,6 +35,13 @@ export class Bullet implements Entity {
 
     move(): void {
         this.y -= this.MOVE_BY;
-        this.render();
+    }
+
+    get rangeX(): [number, number] {
+        return [this.x - this.bulletWidth, this.x + this.bulletWidth];
+    }
+
+    get rangeY(): [number, number] {
+        return [this.y - this.bulletHeight, this.y + this.bulletHeight];
     }
 }
