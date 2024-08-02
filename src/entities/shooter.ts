@@ -16,8 +16,6 @@ export class Shooter implements Entity {
     }
 
     render(): void {
-        // const playgroundHeight = this.context.canvas.clientHeight;
-        // const playgroundWidth = this.context.canvas.clientWidth;
         this.context.beginPath();
         this.drawBase();
         this.drawSecondLayer();

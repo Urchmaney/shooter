@@ -87,14 +87,12 @@ export class PlayGround implements EntityObject{
             const bullet = this.bullets[bIndex];
             let collide = false;
             while (enemyIndex < reachedEnemyIndex && bullet.y < this.enemies[enemyIndex].y) {
-                // console.log(`${bIndex} => ${enemyIndex}`)
                 collide = this.enemies[enemyIndex].intersect(bullet.rangeX, bullet.rangeY);
                 if (collide) break;
                 enemyIndex += 1;
             }
             reachedEnemyIndex = enemyIndex;
             if (collide) {
-                // console.log(`collide == bullet ${bIndex}   with enemy ${enemyIndex}`);
                 this.bullets.splice(bIndex, 1);
                 this.enemies.splice(enemyIndex, 1);
                 continue;

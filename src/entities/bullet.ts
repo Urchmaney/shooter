@@ -20,12 +20,6 @@ export class Bullet implements Entity {
     }
    
     render(): void {
-        // this.context.clearRect(
-        //     this.x - this.bulletWidth,
-        //     this.y + this.MOVE_BY - this.bulletHeight,
-        //     this.bulletWidth * 2,
-        //     this.bulletHeight * 2
-        // )
         this.context.beginPath();
         this.context.fillRect(this.x, this.y, this.bulletWidth, this.bulletHeight);
         this.context.fillRect(this.x, this.y - this.bulletHeight, this.bulletWidth, this.bulletHeight);
