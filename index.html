@@ -8,10 +8,20 @@
   </head>
   <body>
     <div id="app">
+      <p>
+        <span id="InstructionHead">Instruction: </span>You can move with the buttons under the canvas or use left and right arrow key on your keyboard. And spacebar for shooting.
+      </p>
       <h3 id="score"></h3>
       <button id="startBtn">Start Game</button>
       <button id="stopBtn">Stop Game</button>
       <canvas id="playground" height="600" width="600"></canvas>
+
+      <div class="directionContainer">
+        <button id="left" class="actionBtn">Left</button>
+
+        <button id="right" class="actionBtn">Right</button>
+      </div>
+      <button id="shoot" class="actionBtn">Shoot</button>
     </div>
     <script type="module" src="/src/main.ts"></script>
   </body>

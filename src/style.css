@@ -45,6 +45,11 @@ h1 {
   text-align: center;
 }
 
+#InstructionHead {
+  color: blueviolet;
+  font-weight: 700;
+}
+
 #startBtn {
   background-color: rgb(60, 156, 168);
   color: #fff;
@@ -57,6 +62,25 @@ h1 {
 #playground {
   background-color: #c2bbbb;
   image-rendering: pixelated;
+}
+
+.directionContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.actionBtn {
+  color: #fff;
+  padding: 20px;
+  background-color: rgb(51, 76, 80);
+}
+
+#left {
+  width: 40%;
+}
+
+#right {
+  width: 40%;
 }
 
 .logo {

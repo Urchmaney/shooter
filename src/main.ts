@@ -7,6 +7,12 @@ const startBtn : HTMLButtonElement = document.querySelector<HTMLButtonElement>('
 
 const stopBtn : HTMLButtonElement = document.querySelector<HTMLButtonElement>('#stopBtn')!;
 
+const leftBtn : HTMLButtonElement = document.querySelector<HTMLButtonElement>('#left')!;
+
+const rightBtn : HTMLButtonElement = document.querySelector<HTMLButtonElement>('#right')!;
+
+const shootBtn : HTMLButtonElement = document.querySelector<HTMLButtonElement>('#shoot')!;
+
 const score : HTMLHeadingElement = document.querySelector<HTMLHeadingElement>('#score')!;
 
 const context: CanvasRenderingContext2D = canvas.getContext("2d")! 
@@ -38,7 +44,27 @@ stopBtn.addEventListener("click", () => {
   gameOver();
 })
 
+leftBtn.addEventListener("click", () => {
+  if (!playGround.ongoing) return;
+
+  playGround?.shooter.moveLeft();
+})
+
+rightBtn.addEventListener("click", () => {
+  if (!playGround.ongoing) return;
+
+  playGround?.shooter.moveRight();
+});
+
+shootBtn.addEventListener("click", () => {
+  if (!playGround.ongoing) return;
+
+  playGround?.addShooterBullet();
+})
+
 document.addEventListener("keydown", (e: KeyboardEvent) => {
+  if (!playGround.ongoing) return;
+
   if (e.key === "ArrowRight") {
     playGround?.shooter.moveRight();
   }
