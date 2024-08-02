@@ -36,14 +36,26 @@ h1 {
 }
 
 #app {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
 }
 
+#startBtn {
+  background-color: rgb(60, 156, 168);
+  color: #fff;
+}
+
+#stopBtn {
+  background-color: red;
+  display: none;
+}
 #playground {
-  background-color: #888;
+  background-color: #c2bbbb;
   image-rendering: pixelated;
 }
 

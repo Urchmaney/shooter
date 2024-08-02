@@ -6,25 +6,23 @@ import { EntityObject } from "./entity-object";
 export class PlayGround implements EntityObject{
     bullets: Bullet[];
     enemies: Enemy[];
-    bulletPositionToEnemy: number[];
     shooter: Shooter;
     context: CanvasRenderingContext2D;
-    intervalId: number;
-    enemyInterval: number;
-
-    constructor(context: CanvasRenderingContext2D) {
+    intervalId: number | undefined;
+    enemyInterval: number | undefined;
+    ongoing: boolean;
+    score: number;
+    scoreCb: (score: number) => void;
+    gameOverCb: () => void;
+    constructor(context: CanvasRenderingContext2D, scorecb: (score: number) => void, gameOverCb: () => void) {
         this.context = context;
         this.bullets = [];
         this.enemies = [];
-        this.bulletPositionToEnemy = [];
         this.shooter = new Shooter(context);
-        this.intervalId = setInterval(() => {
-            this.render();
-        }, 100);
-
-        this.enemyInterval = setInterval(() => {
-            this.addEnemy();
-        }, 1000);
+        this.ongoing = false;
+        this.score = 0;
+        this.scoreCb = scorecb;
+        this.gameOverCb = gameOverCb;
     }
 
     render() {
@@ -33,8 +31,8 @@ export class PlayGround implements EntityObject{
         this.shooter.render();
 
         while(this.bullets.length && this.bullets[0].y < 0) {
-            this.bullets.shift();
-            this.bulletPositionToEnemy.shift();
+            const bullet = this.bullets.shift();
+            clearInterval(bullet?.moveInterval);
         }
         // for (let i = this.bullets.length - 1; i >= 0; i--) {
         //     if (this.bullets[i].y < 0) this.
@@ -46,7 +44,9 @@ export class PlayGround implements EntityObject{
         }
 
         while(this.enemies.length && this.enemies[0].y > this.context.canvas.clientHeight ) {
-            this.enemies.shift();
+            this.stopGame();
+            const enemy = this.enemies.shift();
+            clearInterval(enemy?.moveInterval);
         }
         // this.enemies.filter(enemy => enemy.y < this.context.canvas.clientHeight)
 
@@ -78,7 +78,6 @@ export class PlayGround implements EntityObject{
     // }
 
     bulletEnemyCollision() {
-        // console.log("check collision");
         let bIndex = 0;
         let reachedEnemyIndex = this.enemies.length;
 
@@ -86,17 +85,21 @@ export class PlayGround implements EntityObject{
             let enemyIndex = 0;
             const bullet = this.bullets[bIndex];
             let collide = false;
-            while (enemyIndex < reachedEnemyIndex && bullet.y < this.enemies[enemyIndex].y) {
-                // console.log(`${bIndex} => ${enemyIndex}`)
+            while (enemyIndex < reachedEnemyIndex && bullet.rangeY[0] < this.enemies[enemyIndex].rangeY[1]) {
                 collide = this.enemies[enemyIndex].intersect(bullet.rangeX, bullet.rangeY);
-                if (collide) break;
+                if (collide) {
+                    break;
+                }
                 enemyIndex += 1;
             }
             reachedEnemyIndex = enemyIndex;
             if (collide) {
-                // console.log(`collide == bullet ${bIndex}   with enemy ${enemyIndex}`);
+                clearInterval(bullet.moveInterval);
                 this.bullets.splice(bIndex, 1);
+                clearInterval(this.enemies[enemyIndex].moveInterval);
                 this.enemies.splice(enemyIndex, 1);
+                this.score += 5;
+                this.scoreCb(this.score);
                 continue;
             }
 
@@ -106,12 +109,32 @@ export class PlayGround implements EntityObject{
 
     addShooterBullet() {
         this.bullets.push(new Bullet(this.context, this.shooter.x, this.shooter.y - 60));
-        this.bulletPositionToEnemy.push(0);
     }
 
     addEnemy() {
         const shouldAdd = Math.floor(Math.random() * 2);
         if (!shouldAdd) return;
         this.enemies.push(new Enemy(this.context, Math.floor(Math.random() * this.context.canvas.clientWidth), 0))
+    }
+
+    startGame() {
+        this.ongoing = true;
+        this.score = 0;
+        this.intervalId = setInterval(() => {
+            this.render();
+        }, 100);
+
+        this.enemyInterval = setInterval(() => {
+            this.addEnemy();
+        }, 1000);
+    }
+
+    stopGame() {
+        this.ongoing = false;
+        clearInterval(this.intervalId);
+        clearInterval(this.enemyInterval);
+        this.enemies = [];
+        this.bullets = [];
+        this.gameOverCb();
     }
 }
