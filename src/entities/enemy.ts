@@ -9,12 +9,13 @@ export class Enemy implements Entity {
 
     private width: number = 20;
     private height: number = 20;
+    moveInterval : number;
 
     constructor(context: CanvasRenderingContext2D, x: number, y: number) {
         this.context = context;
         this.x = x;
         this.y = y;
-        setInterval(() => {
+        this.moveInterval = setInterval(() => {
             this.move()
         }, 100);
     }
@@ -40,7 +41,23 @@ export class Enemy implements Entity {
         // console.log(this.rangeX, this.rangeY);
         // console.log(xRange, yRange);
         // console.log("============ ")
-        return ((xRange[0] >= this.rangeX[0] && xRange[0] <= this.rangeX[1]) || (this.rangeX[0] >= xRange[1] && xRange[1] <= this.rangeX[1]))
-        && ((yRange[0] >= this.rangeY[0] && yRange[0] <= this.rangeY[1]) || (this.rangeY[0] >= yRange[1] && yRange[1] <= this.rangeY[1]))
+        // console.log(
+        //     (this.rangeX[0] <= xRange[0] && this.rangeX[1] >= xRange[0]),
+        //     (this.rangeX[0] <= xRange[1] && this.rangeX[1] >= xRange[1]),
+        //     (this.rangeY[0] <= yRange[0] && this.rangeY[1] >= yRange[0]),
+        //     (this.rangeY[0] <= yRange[1] && this.rangeY[1] >= yRange[1])
+        // )
+
+        const inXaxis = this.isInxAxis(xRange);
+        if (!inXaxis) return inXaxis;
+
+        return (
+            ((this.rangeY[0] <= yRange[0] && this.rangeY[1] >= yRange[0]) ||
+            (this.rangeY[0] <= yRange[1] && this.rangeY[1] >= yRange[1])))
+    }
+
+    isInxAxis(range: [number, number]): boolean {
+        return ((this.rangeX[0] <= range[0] && this.rangeX[1] >= range[0]) &&
+                (this.rangeX[0] <= range[1] && this.rangeX[1] >= range[1]))
     }
 }

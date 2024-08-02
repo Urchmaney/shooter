@@ -8,13 +8,14 @@ export class Bullet implements Entity {
     private bulletWidth: number = 2;
     private bulletHeight: number = 5;
 
+    moveInterval: number;
     MOVE_BY: number = 5;
 
     constructor(context: CanvasRenderingContext2D, x: number, y: number) {
         this.context = context;
         this.x = x;
         this.y = y;
-        setInterval(() => {
+        this.moveInterval = setInterval(() => {
             this.move()
         }, 10);
     }
