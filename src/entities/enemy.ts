@@ -37,10 +37,10 @@ export class Enemy implements Entity {
     }
     
     intersect(xRange: [number, number], yRange: [number, number]): boolean {
-        console.log(this.rangeX, this.rangeY);
-        console.log(xRange, yRange);
-        console.log("============ ")
-        return ((this.rangeX[0] >= xRange[0] && this.rangeX[1] <= xRange[0]) || (this.rangeX[0] >= xRange[1] && this.rangeX[1] <= xRange[1]))
-        && ((this.rangeY[0] >= yRange[0] && this.rangeY[1] <= yRange[0]) || (this.rangeY[0] >= yRange[1] && this.rangeY[1] <= yRange[1]))
+        // console.log(this.rangeX, this.rangeY);
+        // console.log(xRange, yRange);
+        // console.log("============ ")
+        return ((xRange[0] >= this.rangeX[0] && xRange[0] <= this.rangeX[1]) || (this.rangeX[0] >= xRange[1] && xRange[1] <= this.rangeX[1]))
+        && ((yRange[0] >= this.rangeY[0] && yRange[0] <= this.rangeY[1]) || (this.rangeY[0] >= yRange[1] && yRange[1] <= this.rangeY[1]))
     }
 }
