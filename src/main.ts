@@ -48,6 +48,8 @@ let holdInterval: number | undefined;
 
 
 leftBtn.addEventListener("mousedown", () => {
+  if (holdInterval) clearInterval(holdInterval);
+  
   holdInterval = setInterval(() => {
 
     if (!playGround.ongoing) return;
@@ -61,6 +63,8 @@ leftBtn.addEventListener("mouseup", () => {
 })
 
 leftBtn.addEventListener("touchstart", () => {
+  if (holdInterval) clearInterval(holdInterval);
+
   holdInterval = setInterval(() => {
 
     if (!playGround.ongoing) return;
@@ -74,6 +78,8 @@ leftBtn.addEventListener("touchend", () => {
 })
 
 rightBtn.addEventListener("mousedown", () => {
+  if (holdInterval) clearInterval(holdInterval);
+
   holdInterval = setInterval(() => {
 
     if (!playGround.ongoing) return;
@@ -88,6 +94,8 @@ rightBtn.addEventListener("mouseup", () => {
 
 
 rightBtn.addEventListener("touchstart", () => {
+  if (holdInterval) clearInterval(holdInterval);
+
   holdInterval = setInterval(() => {
 
     if (!playGround.ongoing) return;
@@ -106,23 +114,26 @@ shootBtn.addEventListener("click", () => {
   playGround?.addShooterBullet();
 })
 
-shootBtn.addEventListener("touchstart", () => {
-  holdInterval = setInterval(() => {
 
+shootBtn.addEventListener("touchstart", () => {
+  if (holdInterval) clearInterval(holdInterval);
+
+  holdInterval = setInterval(() => {
     if (!playGround.ongoing) return;
 
     playGround?.addShooterBullet();
   }, 50); 
 });
 
-
 shootBtn.addEventListener("touchend", () => {
   clearInterval(holdInterval);
 });
 
 shootBtn.addEventListener("mousedown", () => {
-  holdInterval = setInterval(() => {
+  if (holdInterval) clearInterval(holdInterval);
 
+  holdInterval = setInterval(() => {
+    console.log("gown  shooti", holdInterval)
     if (!playGround.ongoing) return;
 
     playGround?.addShooterBullet();
