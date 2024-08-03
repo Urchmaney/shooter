@@ -48,7 +48,37 @@ leftBtn.addEventListener("click", () => {
   if (!playGround.ongoing) return;
 
   playGround?.shooter.moveLeft();
+});
+
+let holdInterval: number | undefined;
+
+
+leftBtn.addEventListener("mousedown", () => {
+  holdInterval = setInterval(() => {
+
+    if (!playGround.ongoing) return;
+
+    playGround?.shooter.moveLeft();
+  }, 50); 
+});
+
+leftBtn.addEventListener("mouseup", () => {
+  clearInterval(holdInterval);
 })
+
+rightBtn.addEventListener("mousedown", () => {
+  holdInterval = setInterval(() => {
+
+    if (!playGround.ongoing) return;
+
+    playGround?.shooter.moveRight();
+  }, 50); 
+});
+
+rightBtn.addEventListener("mouseup", () => {
+  clearInterval(holdInterval);
+})
+
 
 rightBtn.addEventListener("click", () => {
   if (!playGround.ongoing) return;
