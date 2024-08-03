@@ -66,6 +66,19 @@ leftBtn.addEventListener("mouseup", () => {
   clearInterval(holdInterval);
 })
 
+leftBtn.addEventListener("touchstart", () => {
+  holdInterval = setInterval(() => {
+
+    if (!playGround.ongoing) return;
+
+    playGround?.shooter.moveLeft();
+  }, 50); 
+});
+
+leftBtn.addEventListener("touchend", () => {
+  clearInterval(holdInterval);
+})
+
 rightBtn.addEventListener("mousedown", () => {
   holdInterval = setInterval(() => {
 
@@ -84,6 +97,19 @@ rightBtn.addEventListener("click", () => {
   if (!playGround.ongoing) return;
 
   playGround?.shooter.moveRight();
+});
+
+rightBtn.addEventListener("touchstart", () => {
+  holdInterval = setInterval(() => {
+
+    if (!playGround.ongoing) return;
+
+    playGround?.shooter.moveRight();
+  }, 50); 
+})
+
+rightBtn.addEventListener("touchend", () => {
+  clearInterval(holdInterval);
 });
 
 shootBtn.addEventListener("click", () => {
