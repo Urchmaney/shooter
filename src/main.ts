@@ -100,11 +100,32 @@ rightBtn.addEventListener("touchend", () => {
   clearInterval(holdInterval);
 });
 
-shootBtn.addEventListener("click", () => {
-  if (!playGround.ongoing) return;
+shootBtn.addEventListener("touchstart", () => {
+  holdInterval = setInterval(() => {
 
-  playGround?.addShooterBullet();
+    if (!playGround.ongoing) return;
+
+    playGround?.addShooterBullet();
+  }, 50); 
+});
+
+shootBtn.addEventListener("touchend", () => {
+  clearInterval(holdInterval);
+});
+
+shootBtn.addEventListener("mousedown", () => {
+  holdInterval = setInterval(() => {
+
+    if (!playGround.ongoing) return;
+
+    playGround?.addShooterBullet();
+  }, 50); 
+});
+
+shootBtn.addEventListener("mouseup", () => {
+  clearInterval(holdInterval);
 })
+
 
 document.addEventListener("keydown", (e: KeyboardEvent) => {
   if (!playGround.ongoing) return;
