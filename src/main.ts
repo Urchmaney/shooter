@@ -100,6 +100,12 @@ rightBtn.addEventListener("touchend", () => {
   clearInterval(holdInterval);
 });
 
+shootBtn.addEventListener("click", () => {
+  if (!playGround.ongoing) return;
+
+  playGround?.addShooterBullet();
+})
+
 shootBtn.addEventListener("touchstart", () => {
   holdInterval = setInterval(() => {
 
@@ -108,6 +114,7 @@ shootBtn.addEventListener("touchstart", () => {
     playGround?.addShooterBullet();
   }, 50); 
 });
+
 
 shootBtn.addEventListener("touchend", () => {
   clearInterval(holdInterval);
