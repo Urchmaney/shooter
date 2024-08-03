@@ -44,12 +44,6 @@ stopBtn.addEventListener("click", () => {
   gameOver();
 })
 
-leftBtn.addEventListener("click", () => {
-  if (!playGround.ongoing) return;
-
-  playGround?.shooter.moveLeft();
-});
-
 let holdInterval: number | undefined;
 
 
@@ -92,12 +86,6 @@ rightBtn.addEventListener("mouseup", () => {
   clearInterval(holdInterval);
 })
 
-
-rightBtn.addEventListener("click", () => {
-  if (!playGround.ongoing) return;
-
-  playGround?.shooter.moveRight();
-});
 
 rightBtn.addEventListener("touchstart", () => {
   holdInterval = setInterval(() => {
