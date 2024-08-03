@@ -44,12 +44,6 @@ stopBtn.addEventListener("click", () => {
   gameOver();
 })
 
-leftBtn.addEventListener("click", () => {
-  if (!playGround.ongoing) return;
-
-  playGround?.shooter.moveLeft();
-});
-
 let holdInterval: number | undefined;
 
 
@@ -63,6 +57,19 @@ leftBtn.addEventListener("mousedown", () => {
 });
 
 leftBtn.addEventListener("mouseup", () => {
+  clearInterval(holdInterval);
+})
+
+leftBtn.addEventListener("touchstart", () => {
+  holdInterval = setInterval(() => {
+
+    if (!playGround.ongoing) return;
+
+    playGround?.shooter.moveLeft();
+  }, 50); 
+});
+
+leftBtn.addEventListener("touchend", () => {
   clearInterval(holdInterval);
 })
 
@@ -80,10 +87,17 @@ rightBtn.addEventListener("mouseup", () => {
 })
 
 
-rightBtn.addEventListener("click", () => {
-  if (!playGround.ongoing) return;
+rightBtn.addEventListener("touchstart", () => {
+  holdInterval = setInterval(() => {
 
-  playGround?.shooter.moveRight();
+    if (!playGround.ongoing) return;
+
+    playGround?.shooter.moveRight();
+  }, 50); 
+})
+
+rightBtn.addEventListener("touchend", () => {
+  clearInterval(holdInterval);
 });
 
 shootBtn.addEventListener("click", () => {
