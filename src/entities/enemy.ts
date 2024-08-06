@@ -15,7 +15,7 @@ export class Enemy implements Entity {
         this.context = context;
         this.x = x;
         this.y = y;
-        this.moveInterval = setInterval(() => {
+        this.moveInterval = window.setInterval(() => {
             this.move()
         }, 100);
     }
