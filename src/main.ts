@@ -1,7 +1,14 @@
 import './style.css'
 import { PlayGround } from './playground.ts';
+import db from "./firebase.ts";
+import { collection, doc, getDoc, getDocs, query, QuerySnapshot } from 'firebase/firestore';
+import { QueryDocumentSnapshot } from 'firebase/firestore/lite';
 
 const canvas: HTMLCanvasElement = document.querySelector<HTMLCanvasElement>("#playground")!;
+
+const highScoreName: HTMLHeadingElement = document.querySelector<HTMLHeadingElement>("#highScoreName")!;
+
+const highScoreValue: HTMLParagraphElement = document.querySelector<HTMLParagraphElement>("#highScoreValue")!;
 
 const startBtn : HTMLButtonElement = document.querySelector<HTMLButtonElement>('#startBtn')!;
 
@@ -58,8 +65,8 @@ const clearHoldInterval = () => {
 
 const moveRight = () => {
   if (holdInterval) clearHoldInterval();
-
-  holdInterval = setInterval(() => {
+  setInterval(() => {}, 8)
+  holdInterval = window.setInterval(() => {
 
     if (!playGround.ongoing) return;
 
@@ -70,7 +77,7 @@ const moveRight = () => {
 const moveLeft = () => {
   if (holdInterval) clearHoldInterval();
   
-  holdInterval = setInterval(() => {
+  holdInterval = window.setInterval(() => {
 
     if (!playGround.ongoing) return;
 
@@ -81,7 +88,7 @@ const moveLeft = () => {
 const shoot = () => {
   if (holdInterval) clearHoldInterval();
 
-  holdInterval = setInterval(() => {
+  holdInterval = window.setInterval(() => {
     if (!playGround.ongoing) return;
 
     playGround?.addShooterBullet();
@@ -129,3 +136,16 @@ document.addEventListener("keydown", (e: KeyboardEvent) => {
     playGround?.addShooterBullet();
   }
 })
+
+const q = query(collection(db, "scores"));
+
+await getDocs(q).then(
+  (snap: QuerySnapshot) => {
+    snap.forEach((val: QueryDocumentSnapshot) => {
+      highScoreName.innerHTML = val.data().name;
+      highScoreValue.innerHTML = val.data().value
+    })
+  }
+)
+
+

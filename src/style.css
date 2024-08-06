@@ -22,8 +22,15 @@ a:hover {
   color: #535bf2;
 }
 
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
+  padding: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
@@ -37,12 +44,37 @@ h1 {
 
 #app {
   display: flex;
+  position: relative;
   flex-direction: column;
   gap: 20px;
   max-width: 600px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+}
+
+#highScore {
+  position: absolute;
+  padding: 10px;
+  right: 0;
+  top: 0;
+  background-color: #c2bbbb;
+  border-radius: 10px;
+  width: 150px;
+}
+#highScoreTiltle {
+  padding: 5px;
+}
+
+#highScoreName {
+  font-size: 20px;
+ 
+  font-weight: 500;
+}
+
+#highScoreValue {
+  font-size: 40px;
+  font-weight: 700;
 }
 
 #InstructionHead {
