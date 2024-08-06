@@ -33,12 +33,14 @@ let playerName: string | undefined;
 
 let docId: string | undefined;
 
-canvas.width = window.innerWidth < 600 ? window.innerWidth : 600;
-canvas.height = window.innerHeight < 600 ? 400 : 600
+const windowWidth = innerWidth < 600 ? innerWidth - 100 : 600
+canvas.width = windowWidth
+canvas.height = windowWidth
 
 addEventListener("resize", () => {
-  canvas.width = window.innerWidth < 600 ? window.innerWidth : 600;
-  canvas.height = window.innerHeight < 600 ? 400 : 600
+  const windowWidth = innerWidth < 600 ? innerWidth - 100 : 600
+  canvas.width = windowWidth
+  canvas.height = windowWidth
 })
 
 
