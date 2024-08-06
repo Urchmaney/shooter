@@ -33,7 +33,6 @@ body {
   padding: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
   min-height: 100vh;
 }
 
@@ -44,12 +43,10 @@ h1 {
 
 #app {
   display: flex;
-  position: relative;
   flex-direction: column;
   gap: 20px;
-  max-width: 600px;
+  width: 600px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
@@ -58,9 +55,9 @@ h1 {
   padding: 10px;
   right: 0;
   top: 0;
-  background-color: #c2bbbb;
+  background-color: rgb(60, 156, 168);
   border-radius: 10px;
-  width: 150px;
+  width: 200px;
 }
 #highScoreTiltle {
   padding: 5px;
