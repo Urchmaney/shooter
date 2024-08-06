@@ -1,7 +1,13 @@
 import './style.css'
 import { PlayGround } from './playground.ts';
+import db from "./firebase.ts";
+import { collection, doc, getDocs, onSnapshot, query, QuerySnapshot, setDoc } from 'firebase/firestore';
 
 const canvas: HTMLCanvasElement = document.querySelector<HTMLCanvasElement>("#playground")!;
+
+const highScoreName: HTMLHeadingElement = document.querySelector<HTMLHeadingElement>("#highScoreName")!;
+
+const highScoreValue: HTMLParagraphElement = document.querySelector<HTMLParagraphElement>("#highScoreValue")!;
 
 const startBtn : HTMLButtonElement = document.querySelector<HTMLButtonElement>('#startBtn')!;
 
@@ -19,6 +25,14 @@ const context: CanvasRenderingContext2D = canvas.getContext("2d")!
 
 let playGround: PlayGround | undefined;
 
+const COLLECTION_NAME = "scores";
+
+let highestScore : number = 0;
+
+let playerName: string | undefined;
+
+let docId: string | undefined;
+
 const updateScore = (scoreVal: number) => {
   score.innerHTML = `${scoreVal}`
 }
@@ -26,6 +40,10 @@ const updateScore = (scoreVal: number) => {
 const gameOver = () => {
   startBtn.style.display = "block";
   stopBtn.style.display = "none";
+  if ((playGround?.score || 0) > highestScore) {
+    playerName = prompt('Whats your Name') || "unknown";
+    setDoc(doc(collection(db, COLLECTION_NAME), docId), { name: playerName, value: playGround?.score })
+  }
 }
 
 playGround = new PlayGround(context, updateScore, gameOver);
@@ -58,8 +76,8 @@ const clearHoldInterval = () => {
 
 const moveRight = () => {
   if (holdInterval) clearHoldInterval();
-
-  holdInterval = setInterval(() => {
+  setInterval(() => {}, 8)
+  holdInterval = window.setInterval(() => {
 
     if (!playGround.ongoing) return;
 
@@ -70,7 +88,7 @@ const moveRight = () => {
 const moveLeft = () => {
   if (holdInterval) clearHoldInterval();
   
-  holdInterval = setInterval(() => {
+  holdInterval = window.setInterval(() => {
 
     if (!playGround.ongoing) return;
 
@@ -81,7 +99,7 @@ const moveLeft = () => {
 const shoot = () => {
   if (holdInterval) clearHoldInterval();
 
-  holdInterval = setInterval(() => {
+  holdInterval = window.setInterval(() => {
     if (!playGround.ongoing) return;
 
     playGround?.addShooterBullet();
@@ -129,3 +147,18 @@ document.addEventListener("keydown", (e: KeyboardEvent) => {
     playGround?.addShooterBullet();
   }
 })
+
+const q = query(collection(db, COLLECTION_NAME));
+
+getDocs(q).then(
+  (snap: QuerySnapshot) => {
+    const val = snap.docs.at(0);
+      docId = val?.id;
+      onSnapshot(doc(collection(db, COLLECTION_NAME), docId), (val) => {
+        highScoreName.innerHTML = val.data()?.name;
+        highScoreValue.innerHTML = val.data()?.value
+        highestScore = val.data()?.value;
+      })
+  }
+)
+

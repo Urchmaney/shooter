@@ -120,11 +120,11 @@ export class PlayGround implements EntityObject{
     startGame() {
         this.ongoing = true;
         this.score = 0;
-        this.intervalId = setInterval(() => {
+        this.intervalId = window.setInterval(() => {
             this.render();
         }, 100);
 
-        this.enemyInterval = setInterval(() => {
+        this.enemyInterval = window.setInterval(() => {
             this.addEnemy();
         }, 1000);
     }

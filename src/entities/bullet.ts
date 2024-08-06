@@ -15,7 +15,7 @@ export class Bullet implements Entity {
         this.context = context;
         this.x = x;
         this.y = y;
-        this.moveInterval = setInterval(() => {
+        this.moveInterval = window.setInterval(() => {
             this.move()
         }, 10);
     }
