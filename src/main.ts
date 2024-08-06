@@ -18,6 +18,7 @@ const score : HTMLHeadingElement = document.querySelector<HTMLHeadingElement>('#
 const context: CanvasRenderingContext2D = canvas.getContext("2d")! 
 
 let playGround: PlayGround | undefined;
+
 const updateScore = (scoreVal: number) => {
   score.innerHTML = `${scoreVal}`
 }
@@ -31,7 +32,6 @@ playGround = new PlayGround(context, updateScore, gameOver);
   
 
 startBtn.addEventListener("click", () => {
-
   if (playGround.ongoing) return;
   playGround.startGame();
   startBtn.style.display = "none";
@@ -44,11 +44,31 @@ stopBtn.addEventListener("click", () => {
   gameOver();
 })
 
+shootBtn.addEventListener("click", () => {
+  if (!playGround.ongoing) return;
+
+  playGround?.addShooterBullet();
+})
+
 let holdInterval: number | undefined;
 
+const clearHoldInterval = () => {
+  clearInterval(holdInterval);
+}
 
-leftBtn.addEventListener("mousedown", () => {
-  if (holdInterval) clearInterval(holdInterval);
+const moveRight = () => {
+  if (holdInterval) clearHoldInterval();
+
+  holdInterval = setInterval(() => {
+
+    if (!playGround.ongoing) return;
+
+    playGround?.shooter.moveRight();
+  }, 50); 
+}
+
+const moveLeft = () => {
+  if (holdInterval) clearHoldInterval();
   
   holdInterval = setInterval(() => {
 
@@ -56,93 +76,43 @@ leftBtn.addEventListener("mousedown", () => {
 
     playGround?.shooter.moveLeft();
   }, 50); 
-});
+}
 
-leftBtn.addEventListener("mouseup", () => {
-  clearInterval(holdInterval);
-})
-
-leftBtn.addEventListener("touchstart", () => {
-  if (holdInterval) clearInterval(holdInterval);
-
-  holdInterval = setInterval(() => {
-
-    if (!playGround.ongoing) return;
-
-    playGround?.shooter.moveLeft();
-  }, 50); 
-});
-
-leftBtn.addEventListener("touchend", () => {
-  clearInterval(holdInterval);
-})
-
-rightBtn.addEventListener("mousedown", () => {
-  if (holdInterval) clearInterval(holdInterval);
-
-  holdInterval = setInterval(() => {
-
-    if (!playGround.ongoing) return;
-
-    playGround?.shooter.moveRight();
-  }, 50); 
-});
-
-rightBtn.addEventListener("mouseup", () => {
-  clearInterval(holdInterval);
-})
-
-
-rightBtn.addEventListener("touchstart", () => {
-  if (holdInterval) clearInterval(holdInterval);
-
-  holdInterval = setInterval(() => {
-
-    if (!playGround.ongoing) return;
-
-    playGround?.shooter.moveRight();
-  }, 50); 
-})
-
-rightBtn.addEventListener("touchend", () => {
-  clearInterval(holdInterval);
-});
-
-shootBtn.addEventListener("click", () => {
-  if (!playGround.ongoing) return;
-
-  playGround?.addShooterBullet();
-})
-
-
-shootBtn.addEventListener("touchstart", () => {
-  if (holdInterval) clearInterval(holdInterval);
+const shoot = () => {
+  if (holdInterval) clearHoldInterval();
 
   holdInterval = setInterval(() => {
     if (!playGround.ongoing) return;
 
     playGround?.addShooterBullet();
   }, 50); 
-});
+}
 
-shootBtn.addEventListener("touchend", () => {
-  clearInterval(holdInterval);
-});
+leftBtn.addEventListener("mousedown", moveLeft);
 
-shootBtn.addEventListener("mousedown", () => {
-  if (holdInterval) clearInterval(holdInterval);
+leftBtn.addEventListener("mouseup", clearHoldInterval);
 
-  holdInterval = setInterval(() => {
-    console.log("gown  shooti", holdInterval)
-    if (!playGround.ongoing) return;
+leftBtn.addEventListener("touchstart", moveLeft);
 
-    playGround?.addShooterBullet();
-  }, 50); 
-});
+leftBtn.addEventListener("touchend", clearHoldInterval);
 
-shootBtn.addEventListener("mouseup", () => {
-  clearInterval(holdInterval);
-})
+rightBtn.addEventListener("mousedown", moveRight);
+
+rightBtn.addEventListener("mouseup", clearHoldInterval);
+
+
+rightBtn.addEventListener("touchstart", moveRight)
+
+rightBtn.addEventListener("touchend", clearHoldInterval);
+
+
+shootBtn.addEventListener("touchstart", shoot);
+
+shootBtn.addEventListener("touchend", clearHoldInterval);
+
+shootBtn.addEventListener("mousedown", shoot);
+
+shootBtn.addEventListener("mouseup", clearHoldInterval);
 
 
 document.addEventListener("keydown", (e: KeyboardEvent) => {
