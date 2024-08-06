@@ -33,6 +33,11 @@ let playerName: string | undefined;
 
 let docId: string | undefined;
 
+addEventListener("resize", () => {
+  
+  canvas.width = window.innerWidth < 600 ? window.innerWidth : 600;
+})
+
 const updateScore = (scoreVal: number) => {
   score.innerHTML = `${scoreVal}`
 }
