@@ -1,0 +1,1 @@
+export const MOVE_BY_DIVISOR = 60;

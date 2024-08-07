@@ -7,17 +7,22 @@ export class Enemy implements Entity {
 
     MOVE_BY: number = 10;
 
-    private width: number = 20;
-    private height: number = 20;
+    private width: number;
+    private height: number;
     moveInterval : number;
 
     constructor(context: CanvasRenderingContext2D, x: number, y: number) {
         this.context = context;
         this.x = x;
         this.y = y;
+        this.width = Math.ceil(this.context.canvas.width / 25);
+        this.height = Math.ceil(this.context.canvas.height / 25);
+
+       
+        const speed = Math.floor(60000 / this.context.canvas.height);
         this.moveInterval = window.setInterval(() => {
             this.move()
-        }, 100);
+        }, speed);
     }
     render(): void {
         this.context.beginPath();

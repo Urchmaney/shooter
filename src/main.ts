@@ -34,6 +34,7 @@ let playerName: string | undefined;
 let docId: string | undefined;
 
 const windowWidth = innerWidth < 600 ? innerWidth - 100 : 600
+
 canvas.width = windowWidth
 canvas.height = windowWidth
 
