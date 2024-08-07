@@ -54,6 +54,9 @@ const gameOver = () => {
   stopBtn.style.display = "none";
   if ((playGround?.score || 0) > highestScore) {
     playerName = prompt('Whats your Name') || "unknown";
+    if(playerName.length > 16) {
+      playerName = `${playerName.substring(0, 14)}...`
+    }
     setDoc(doc(collection(db, COLLECTION_NAME), docId), { name: playerName, value: playGround?.score })
   }
 }
