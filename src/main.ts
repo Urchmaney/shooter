@@ -5,6 +5,10 @@ import { collection, doc, getDocs, onSnapshot, query, QuerySnapshot, setDoc } fr
 
 const canvas: HTMLCanvasElement = document.querySelector<HTMLCanvasElement>("#playground")!;
 
+const highScoreInline: HTMLSpanElement = document.querySelector<HTMLSpanElement>("#highScoreInline")!;
+
+const highScoreInlineName: HTMLSpanElement = document.querySelector<HTMLSpanElement>("#highScoreInlineName")!;
+
 const highScoreName: HTMLHeadingElement = document.querySelector<HTMLHeadingElement>("#highScoreName")!;
 
 const highScoreValue: HTMLParagraphElement = document.querySelector<HTMLParagraphElement>("#highScoreValue")!;
@@ -54,6 +58,9 @@ const gameOver = () => {
   stopBtn.style.display = "none";
   if ((playGround?.score || 0) > highestScore) {
     playerName = prompt('Whats your Name') || "unknown";
+    if(playerName.length > 16) {
+      playerName = `${playerName.substring(0, 14)}...`
+    }
     setDoc(doc(collection(db, COLLECTION_NAME), docId), { name: playerName, value: playGround?.score })
   }
 }
@@ -169,6 +176,8 @@ getDocs(q).then(
       onSnapshot(doc(collection(db, COLLECTION_NAME), docId), (val) => {
         highScoreName.innerHTML = val.data()?.name;
         highScoreValue.innerHTML = val.data()?.value
+        highScoreInline.innerHTML = val.data()?.value
+        highScoreInlineName.innerHTML = val.data()?.name
         highestScore = val.data()?.value;
       })
   }

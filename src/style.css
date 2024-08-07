@@ -101,6 +101,18 @@ h1 {
   justify-content: space-between;
 }
 
+.scoreContainer {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  align-items: center;
+}
+
+.highScoreInlineData {
+  font-size: 30px;
+  font-weight: 700;
+}
+
 .actionBtn {
   color: #fff;
   padding: 20px;
@@ -168,5 +180,19 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  #highScore {
+    display: none;
+  }
+
+  .highScoreInlineData {
+    font-size: 15px;
+  }
+
+  .hInfo {
+    font-size: 10px;
   }
 }
