@@ -27,55 +27,29 @@ export class PlayGround implements EntityObject{
 
     render() {
         this.context.clearRect(0, 0, this.context.canvas.clientWidth, this.context.canvas.clientHeight);
-
         this.shooter.render();
 
         while(this.bullets.length && this.bullets[0].y < 0) {
             const bullet = this.bullets.shift();
             clearInterval(bullet?.moveInterval);
         }
-        // for (let i = this.bullets.length - 1; i >= 0; i--) {
-        //     if (this.bullets[i].y < 0) this.
-        // }
-        // this.bullets = this.bullets.filter(bullet => bullet.y > 0);
 
         for(let bullet of this.bullets) {
             bullet.render();
         }
 
-        while(this.enemies.length && this.enemies[0].y > this.context.canvas.clientHeight ) {
+        while(this.enemies.length && this.enemies[0].y > this.context.canvas.height ) {
             this.stopGame();
             const enemy = this.enemies.shift();
             clearInterval(enemy?.moveInterval);
         }
-        // this.enemies.filter(enemy => enemy.y < this.context.canvas.clientHeight)
 
         for(let enemy of this.enemies) {
             enemy.render();
         }
         
         this.bulletEnemyCollision();
-        // console.log(this.bulletPositionToEnemy, "==="); 
     }
-
-    // bulletEnemyCollision() {
-    //     // console.log("check collision");
-    //     let bIndex = 0;
-    //     while(this.bullets.length && bIndex < this.bullets.length && (bIndex === 0 || this.bulletPositionToEnemy[bIndex] < this.bulletPositionToEnemy[bIndex - 1])) {
-    //         let enemyIndex = this.bulletPositionToEnemy[bIndex];
-    //         const bullet = this.bullets[bIndex];
-    //         let collide = false;
-    //         while (!collide && this.enemies[enemyIndex] && bullet.y < this.enemies[enemyIndex].y) {
-    //             console.log(`${bIndex} => ${enemyIndex}`)
-    //             collide = this.enemies[enemyIndex].intersect(bullet.rangeX, bullet.rangeY);
-    //             enemyIndex += 1;
-    //         }
-            
-    //         if (collide) console.log("collide ====================")
-    //         this.bulletPositionToEnemy[bIndex] = enemyIndex;
-    //         bIndex += 1;
-    //     }
-    // }
 
     bulletEnemyCollision() {
         let bIndex = 0;
@@ -114,7 +88,7 @@ export class PlayGround implements EntityObject{
     addEnemy() {
         const shouldAdd = Math.floor(Math.random() * 2);
         if (!shouldAdd) return;
-        this.enemies.push(new Enemy(this.context, Math.floor(Math.random() * this.context.canvas.clientWidth), 0))
+        this.enemies.push(new Enemy(this.context, Math.floor(Math.random() * this.context.canvas.width), 0))
     }
 
     startGame() {

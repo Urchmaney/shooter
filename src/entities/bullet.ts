@@ -5,8 +5,8 @@ export class Bullet implements Entity {
     x: number;
     y: number;
 
-    private bulletWidth: number = 2;
-    private bulletHeight: number = 5;
+    private bulletWidth: number;
+    private bulletHeight: number;
 
     moveInterval: number;
     MOVE_BY: number = 5;
@@ -15,10 +15,13 @@ export class Bullet implements Entity {
         this.context = context;
         this.x = x;
         this.y = y;
+        this.bulletHeight = Math.ceil(this.context.canvas.height / 100);
+        this.bulletWidth = Math.ceil(this.context.canvas.width / 300);
         this.moveInterval = window.setInterval(() => {
             this.move()
-        }, 10);
+        }, Math.ceil(6000 / this.context.canvas.height));
     }
+
    
     render(): void {
         this.context.beginPath();

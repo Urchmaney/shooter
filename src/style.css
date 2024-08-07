@@ -93,6 +93,7 @@ h1 {
 #playground {
   background-color: #c2bbbb;
   image-rendering: pixelated;
+  display: block;
 }
 
 .directionContainer {
@@ -104,6 +105,9 @@ h1 {
   color: #fff;
   padding: 20px;
   background-color: rgb(51, 76, 80);
+  -webkit-user-select: none;
+  -ms-user-select: none; 
+  user-select: none;
 }
 
 #left {
