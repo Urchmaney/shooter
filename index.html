@@ -19,7 +19,12 @@
       <p>
         <span id="InstructionHead">Instruction: </span>You can move with the buttons under the canvas or use left and right arrow key on your keyboard. And spacebar for shooting.
       </p>
-      <h3 id="score"></h3>
+      <div class="scoreContainer">
+        <h3 id="score">0</h3>
+         / <span id="highScoreInline" class="highScoreInlineData">0</span> 
+         <span class="hInfo">High Score (To beat)</span>
+         <span id="highScoreInlineName" class="highScoreInlineData"></span>
+      </div>
       <button id="startBtn">Start Game</button>
       <button id="stopBtn">Stop Game</button>
       <canvas id="playground" height="600" width="600"></canvas>
